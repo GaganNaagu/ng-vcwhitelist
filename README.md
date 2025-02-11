@@ -1,5 +1,3 @@
----
-
 # **ng-vcwhitelist**  
 
 **ng-vcwhitelist** is a FiveM Discord bot designed to enforce a structured roleplay environment by ensuring players sit in the correct voice channels before joining the server. This system prevents excessive **Discord RP**, promotes in-game immersion, and ensures players remain in their designated voice channels.  
