@@ -1,19 +1,33 @@
 ---
 
-# ng-vcwhitelist
+# **ng-vcwhitelist**  
 
-**ng-vcwhitelist** is a Discord bot that automates the whitelisting process for a FiveM server. It verifies players based on their Discord roles and voice channel presence before granting them access.
+**ng-vcwhitelist** is a FiveM Discord bot designed to enforce a structured roleplay environment by ensuring players sit in the correct voice channels before joining the server. This system prevents excessive **Discord RP**, promotes in-game immersion, and ensures players remain in their designated voice channels.  
 
-## Features
+## 🎯 **Key Features**  
 
-- Automatically whitelist players in FiveM based on their Discord role and voice channel presence.
-- Admin control using a specified Discord role.
-- Easy configuration via `config.js`.
-- Lightweight and efficient.
+- 🛑 **Whitelist Enforcement**: Players must be in the correct VC to be allowed into the server.  
+- 🔄 **Role-Based VC Access**: Different roles have different VC permissions.  
+- ❄️ **Anti-Discord RP Mechanism**:  
+  - If a player **leaves the required VC after joining the game**, their **game will freeze**.  
+  - The game **unfreezes when they rejoin** the correct VC.  
+  - This prevents players from using Discord RP to bypass in-game interactions.  
 
-## Installation
+---
 
-Follow these steps to set up the bot:
+## 🔥 **How It Works**  
+
+The bot enforces the following rules:  
+
+- **Whitelist Players**: Must sit in a **designated whitelist voice channel** before joining the server.  
+- **Police Department (PD) Players**:  
+  - Can sit in **both the whitelist VC and an exclusive PD VC**.  
+  - If they leave all designated VCs while in-game, their game **freezes** until they return.  
+- **Other Roles (EMS, Staff, etc.)**: Can be configured similarly to enforce VC restrictions.  
+
+---
+
+## 🛠 **Installation**  
 
 1. **Clone the Repository**  
    ```bash
@@ -21,30 +35,56 @@ Follow these steps to set up the bot:
    cd ng-vcwhitelist
    ```
 
-2. **Configure the Bot**  
-   Open `config.js` and set the required values:
-   - `token`: Your Discord bot token.
-   - `guildId`: The ID of the Discord server where the bot will operate.
-   - `adminRoleId`: The ID of the Discord role with admin privileges.
-   - `roleVoiceChannels`: A mapping of role IDs to voice channel IDs.
+2. **Edit Configuration**  
+   Open `config.js` and update the following:  
 
-3. **Add the Bot to Your Server**  
-   Ensure the bot has the necessary permissions to read voice channel activity and manage roles.
+   - `token`: Your **Discord bot token**.  
+   - `guildId`: The **Discord server ID** where the bot will operate.  
+   - `adminRoleId`: The **Discord role ID** for admins who can manage the bot.  
+   - `roleVoiceChannels`: A mapping of role IDs to **designated voice channels**.  
+   - `freezeCommand`: The **command to freeze/unfreeze players** if they leave their VC.  
+
+3. **Ensure the Bot Has Permissions**  
+   - `Read Messages` & `Send Messages`  
+   - `Connect` & `Speak` in Voice Channels  
+   - `Manage Roles`  
+   - `Execute Commands` to **freeze/unfreeze players**  
 
 4. **Start the Bot**  
-   Run the script by adding the following line to your FiveM `server.cfg`:
+   Add the following line to your **FiveM `server.cfg`**:  
    ```cfg
    ensure ng-vcwhitelist
-   ```
+   ```  
 
-## Usage
+---
 
-- When a player joins a designated voice channel, the bot checks their role and grants whitelisting permissions in FiveM.
-- Admins can override settings if needed.
+## 🔧 **Configuration Example**  
 
-## Dependencies
+Your `config.js` should look like this:  
 
-Ensure you have the following installed:
+```js
+module.exports = {
+    token: "YOUR_DISCORD_BOT_TOKEN",
+    guildId: "YOUR_DISCORD_SERVER_ID",
+    adminRoleId: "ADMIN_ROLE_ID",
+    roleVoiceChannels: {
+        "WHITELIST_ROLE_ID": ["WHITELIST_VC_ID"],
+        "PD_ROLE_ID": ["WHITELIST_VC_ID", "PD_VC_ID"],
+        "EMS_ROLE_ID": ["WHITELIST_VC_ID", "EMS_VC_ID"]
+    },
+    freezeCommand: "freezePlayer"
+};
+```  
 
-- A FiveM server
-- A Discord bot with proper permissions
+### **Game Freeze Mechanism**  
+If a player **leaves their required VC**, the bot will run the `freezeCommand` on them until they return.  
+
+---
+
+## 🏗 **Planned Features**  
+
+- ⏳ Support for **custom role hierarchies**  
+- ⏳ **Webhook logs** to track whitelist attempts  
+- ⏳ Option to **kick or auto-mute players** instead of freezing  
+
+---
