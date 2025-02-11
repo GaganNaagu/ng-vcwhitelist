@@ -1,5 +1,3 @@
-Here’s a well-structured README file for your `ng-vcwhitelist` repository:
-
 ---
 
 # ng-vcwhitelist
